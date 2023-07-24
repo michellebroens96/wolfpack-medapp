@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Pack } from 'src/models/pack.model';
 import { environment } from 'src/environments/environment';
+import { catchError } from 'rxjs/operators'; 
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class PackService {
   getPack(id: number): Observable<Pack> {
     return this.http.get<Pack>(`${environment.apiUrl}/packs/${id}`, this.httpOptions);
   }
+
 
   addPack(pack: Pack): Observable<Pack> {
     return this.http.post<Pack>(`${environment.apiUrl}/packs`, pack, this.httpOptions);

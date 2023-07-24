@@ -9,7 +9,8 @@
 
   <div *ngIf="selectedPack">
     <h3>{{ selectedPack.name }}</h3>
-    <p>Location: {{ selectedPack.location }}</p>
+    <p>Latitude: {{ selectedPack.lat }}</p>
+    <p>Longitude: {{ selectedPack.lng }}</p>
 
     <h4>Wolves in the Pack:</h4>
     <ul>
@@ -33,8 +34,12 @@
     <input [(ngModel)]="newPack.name" placeholder="Name" />
   </div>
   <div>
-    <label>Location:</label>
-    <input [(ngModel)]="newPack.location" placeholder="Location" />
+    <label>Latitude:</label>
+    <input [(ngModel)]="newPack.lat" placeholder="Latitude" type="number" step="any" />
+  </div>
+  <div>
+    <label>Longitude:</label>
+    <input [(ngModel)]="newPack.lng" placeholder="Longitude" type="number" step="any" />
   </div>
   <button (click)="addPack()">Add Pack</button>
 </div>

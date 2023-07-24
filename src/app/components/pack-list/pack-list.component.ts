@@ -12,7 +12,7 @@ import { Wolf } from 'src/models/wolf.model';
 export class PackListComponent implements OnInit {
   packs: Pack[] = [];
   wolves: Wolf[] = [];
-  newPack: Pack = { id: 0, name: '', location: '', wolves: [] };
+  newPack: Pack = { id: 0, name: '', lat: '', lng: '', wolves: [] };
   selectedPackId: number = 0;
   selectedPack: Pack | null = null;
   selectedWolfId: number = 0;
@@ -55,7 +55,7 @@ export class PackListComponent implements OnInit {
   addPack(): void {
     this.packService.addPack(this.newPack).subscribe((pack) => {
       this.packs.push(pack);
-      this.newPack = { id: 0, name: '', location: '', wolves: [] };
+      this.newPack = { id: 0, name: '', lat: '', lng: '', wolves: [] };
     });
   }
 
