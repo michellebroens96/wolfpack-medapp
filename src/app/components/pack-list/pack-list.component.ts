@@ -70,23 +70,20 @@ export class PackListComponent implements OnInit {
   }
 
   addWolfToPack(packId: number, wolfId: number): void {
-    this.packService.addWolfToPack(packId, wolfId).subscribe(() => {
-      const pack = this.packs.find((p) => p.id === packId);
+    this.packService.addWolfToPack(packId, wolfId).subscribe((pack) => {
+      this.packs.find((p) => p.id === packId);
       if (pack) {
-        const wolf = this.wolves.find((w) => w.id === wolfId);
-        if (wolf) {
-          pack.wolves.push(wolf);
+        const selectedWolf = this.wolves.find((w) => w.id === wolfId);
+        if (selectedWolf) {
+          pack.wolves.push(selectedWolf);
         }
       }
     });
   }
 
   removeWolfFromPack(packId: number, wolfId: number): void {
-    this.packService.removeWolfFromPack(packId, wolfId).subscribe(() => {
-      const pack = this.packs.find((p) => p.id === packId);
-      if (pack) {
-        pack.wolves = pack.wolves.filter((wolf) => wolf.id !== wolfId);
-      }
+    this.packService.removeWolfFromPack(packId, wolfId).subscribe((pack) => {
+      this.wolves = [...this.wolves];
     });
   }
 }

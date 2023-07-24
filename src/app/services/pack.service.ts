@@ -25,7 +25,6 @@ export class PackService {
     return this.http.get<Pack>(`${environment.apiUrl}/packs/${id}`, this.httpOptions);
   }
 
-
   addPack(pack: Pack): Observable<Pack> {
     return this.http.post<Pack>(`${environment.apiUrl}/packs`, pack, this.httpOptions);
   }
@@ -38,11 +37,11 @@ export class PackService {
     return this.http.delete(`${environment.apiUrl}/packs/${id}`, this.httpOptions);
   }
 
-  addWolfToPack(packId: number, wolfId: number): Observable<Pack> {
-    return this.http.post<Pack>(`${environment.apiUrl}/packs/${packId}/addWolf/${wolfId}`, null, this.httpOptions);
+  addWolfToPack(packId: number, wolf_Id: number): Observable<Pack> {
+    return this.http.post<Pack>(`${environment.apiUrl}/packs/${packId}/wolf/${wolf_Id}`, null, this.httpOptions);
   }
 
-  removeWolfFromPack(packId: number, wolfId: number): Observable<Pack> {
-    return this.http.post<Pack>(`${environment.apiUrl}/packs/${packId}/removeWolf/${wolfId}`, null, this.httpOptions);
+  removeWolfFromPack(packId: number, wolf_Id: number): Observable<Pack> {
+    return this.http.delete<Pack>(`${environment.apiUrl}/packs/${packId}/wolf/${wolf_Id}`, this.httpOptions);
   }
 }
