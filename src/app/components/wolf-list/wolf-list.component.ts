@@ -34,8 +34,7 @@ export class WolfListComponent implements OnInit {
     };
     var datePipe = new DatePipe('en-GB');
     datePipe.transform(newWolfData.birthday, 'yyyy/MM/dd')
-
-    console.log(newWolfData)
+    
     this.wolfService.addWolf(newWolfData).subscribe((wolf) => {
       this.wolves.push(wolf);
       this.newWolf = { id: 0, name: '', gender: '', birthday: new Date() };
