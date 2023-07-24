@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    apiUrl: 'https://join.wolfpackit.nl/api'
+    apiUrl: 'https://join.wolfpackit.nl/api/v1'
   };
   
   /*
