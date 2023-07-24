@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { WolfListComponent } from './wolf-list/wolf-list.component';
-import { PackListComponent } from './pack-list/pack-list.component';
-import { PackMapComponent } from './pack-map/pack-map.component';
+
+import { WolfListComponent } from './components/wolf-list/wolf-list.component';
+import { PackListComponent } from './components/pack-list/pack-list.component';
+import { PackMapComponent } from './components/pack-map/pack-map.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { PackMapComponent } from './pack-map/pack-map.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    FormsModule,
+    RouterModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

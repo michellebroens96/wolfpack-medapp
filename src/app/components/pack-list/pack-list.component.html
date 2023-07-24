@@ -1,1 +1,21 @@
-<p>pack-list works!</p>
+<h2>All Packs</h2>
+<div *ngFor="let pack of packs">
+  <h3>{{ pack.name }}</h3>
+  <p>Location: {{ pack.location }}</p>
+  <ul>
+    <li *ngFor="let wolf of pack.wolves">
+      {{ wolf.name }}
+      <button (click)="removeWolfFromPack(pack.id, wolf.id)">Remove from Pack</button>
+    </li>
+  </ul>
+  <select [(ngModel)]="selectedWolfId">
+    <option value="">Select a Wolf to Add</option>
+    <option *ngFor="let wolf of wolves" [value]="wolf.id">{{ wolf.name }}</option>
+  </select>
+  <button (click)="addWolfToPack(pack.id, selectedWolfId)">Add to Pack</button>
+  <button (click)="removePack(pack.id)">Remove Pack</button>
+</div>
+<h2>Add New Pack</h2>
+<input [(ngModel)]="newPack.name" placeholder="Name" />
+<input [(ngModel)]="newPack.location" placeholder="Location" />
+<button (click)="addPack()">Add Pack</button>

@@ -1,1 +1,12 @@
-<p>wolf-list works!</p>
+<h2>All Wolves</h2>
+<div *ngFor="let wolf of wolves">
+  <input [(ngModel)]="wolf.name" (change)="updateWolf(wolf)" />
+  <input [(ngModel)]="wolf.gender" (change)="updateWolf(wolf)" />
+  <input type="date" [(ngModel)]="wolf.birthdate" (change)="updateWolf(wolf)" />
+  <button (click)="removeWolf(wolf.id)">Remove</button>
+</div>
+<h2>Add New Wolf</h2>
+<input [(ngModel)]="newWolf.name" placeholder="Name" />
+<input [(ngModel)]="newWolf.gender" placeholder="Gender" />
+<input type="date" [(ngModel)]="newWolf.birthdate" />
+<button (click)="addWolf()">Add Wolf</button>
