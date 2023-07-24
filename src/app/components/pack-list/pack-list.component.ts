@@ -12,11 +12,12 @@ import { Wolf } from 'src/models/wolf.model';
 export class PackListComponent implements OnInit {
   packs: Pack[] = [];
   wolves: Wolf[] = [];
-  selectedWolfId: number = 0;
   newPack: Pack = { id: 0, name: '', location: '', wolves: [] };
-  selectedPack: Pack = this.newPack;
+  selectedPackId: number = 0;
+  selectedPack: Pack | null = null;
+  selectedWolfId: number = 0;
 
-  constructor(private packService: PackService, private wolfService: WolfService) {}
+  constructor(private packService: PackService, private wolfService: WolfService) { }
 
   ngOnInit(): void {
     this.getPacks();
@@ -32,6 +33,22 @@ export class PackListComponent implements OnInit {
   getWolves(): void {
     this.wolfService.getWolves().subscribe((wolves) => {
       this.wolves = wolves;
+    });
+  }
+
+  onPackSelected(): void {
+    if (this.selectedPackId) {
+      this.packService.getPack(this.selectedPackId).subscribe((pack) => {
+        this.selectedPack = pack;
+      });
+    } else {
+      this.selectedPack = null;
+    }
+  }
+
+  getWolvesForPack(packId: number): void {
+    this.packService.getPack(packId).subscribe((pack) => {
+      this.selectedPack = pack;
     });
   }
 
@@ -53,24 +70,23 @@ export class PackListComponent implements OnInit {
   }
 
   addWolfToPack(packId: number, wolfId: number): void {
-    this.packService.addWolfToPack(packId, wolfId).subscribe((pack) => {
-      this.updateSelectedPack(pack);
+    this.packService.addWolfToPack(packId, wolfId).subscribe(() => {
+      const pack = this.packs.find((p) => p.id === packId);
+      if (pack) {
+        const wolf = this.wolves.find((w) => w.id === wolfId);
+        if (wolf) {
+          pack.wolves.push(wolf);
+        }
+      }
     });
   }
 
   removeWolfFromPack(packId: number, wolfId: number): void {
-    this.packService.removeWolfFromPack(packId, wolfId).subscribe((pack) => {
-      this.updateSelectedPack(pack);
+    this.packService.removeWolfFromPack(packId, wolfId).subscribe(() => {
+      const pack = this.packs.find((p) => p.id === packId);
+      if (pack) {
+        pack.wolves = pack.wolves.filter((wolf) => wolf.id !== wolfId);
+      }
     });
-  }
-
-  selectPack(pack: Pack): void {
-    this.selectedPack = pack;
-  }
-
-  updateSelectedPack(pack: Pack): void {
-    if (this.selectedPack && pack.id === this.selectedPack.id) {
-      this.selectedPack = pack;
-    }
   }
 }

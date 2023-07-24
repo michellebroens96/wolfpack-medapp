@@ -1,21 +1,40 @@
-<h2>All Packs</h2>
-<div *ngFor="let pack of packs">
-  <h3>{{ pack.name }}</h3>
-  <p>Location: {{ pack.location }}</p>
-  <ul>
-    <li *ngFor="let wolf of pack.wolves">
-      {{ wolf.name }}
-      <button (click)="removeWolfFromPack(pack.id, wolf.id)">Remove from Pack</button>
-    </li>
-  </ul>
-  <select [(ngModel)]="selectedWolfId">
-    <option value="">Select a Wolf to Add</option>
-    <option *ngFor="let wolf of wolves" [value]="wolf.id">{{ wolf.name }}</option>
-  </select>
-  <button (click)="addWolfToPack(pack.id, selectedWolfId)">Add to Pack</button>
-  <button (click)="removePack(pack.id)">Remove Pack</button>
+<div class="container">
+  <h2>Pack List</h2>
+  <div>
+    <label>Select a Pack:</label>
+    <select [(ngModel)]="selectedPackId" (change)="onPackSelected()">
+      <option *ngFor="let pack of packs" [value]="pack.id">{{ pack.name }}</option>
+    </select>
+  </div>
+
+  <div *ngIf="selectedPack">
+    <h3>{{ selectedPack.name }}</h3>
+    <p>Location: {{ selectedPack.location }}</p>
+
+    <h4>Wolves in the Pack:</h4>
+    <ul>
+      <li *ngFor="let wolf of selectedPack.wolves">
+        {{ wolf.name }} - {{ wolf.gender }} - {{ wolf.birthday | date: 'MM/dd/yyyy' }}
+        <button (click)="removeWolfFromPack(selectedPack.id, wolf.id)">Remove from Pack</button>
+      </li>
+    </ul>
+
+    <h4>Add Wolf to Pack:</h4>
+    <select [(ngModel)]="selectedWolfId">
+      <option value="">Select a Wolf</option>
+      <option *ngFor="let wolf of wolves" [value]="wolf.id">{{ wolf.name }}</option>
+    </select>
+    <button (click)="addWolfToPack(selectedPack.id, selectedWolfId)">Add to Pack</button>
+  </div>
+
+  <h2>Add New Pack</h2>
+  <div>
+    <label>Name:</label>
+    <input [(ngModel)]="newPack.name" placeholder="Name" />
+  </div>
+  <div>
+    <label>Location:</label>
+    <input [(ngModel)]="newPack.location" placeholder="Location" />
+  </div>
+  <button (click)="addPack()">Add Pack</button>
 </div>
-<h2>Add New Pack</h2>
-<input [(ngModel)]="newPack.name" placeholder="Name" />
-<input [(ngModel)]="newPack.location" placeholder="Location" />
-<button (click)="addPack()">Add Pack</button>

@@ -11,14 +11,11 @@ import { Wolf } from 'src/models/wolf.model';
 
 export class WolfListComponent implements OnInit {
   wolves: Wolf[] = [];
-  gender: string[] = [];
   newWolf: Wolf = { id: 0, name: '', gender: '', birthday: new Date() };
   constructor(private wolfService: WolfService) {}
 
   ngOnInit(): void {
     this.getWolves();
-    this.gender.push('male');
-    this.gender.push('female');
   }
 
   getWolves(): void {
@@ -26,16 +23,7 @@ export class WolfListComponent implements OnInit {
   }
 
   addWolf(): void {
-    const newWolfData: Wolf = {
-      id: 0,
-      name: this.newWolf.name,
-      gender: this.newWolf.gender,
-      birthday: this.newWolf.birthday
-    };
-    var datePipe = new DatePipe('en-GB');
-    datePipe.transform(newWolfData.birthday, 'yyyy/MM/dd')
-    
-    this.wolfService.addWolf(newWolfData).subscribe((wolf) => {
+    this.wolfService.addWolf(this.newWolf).subscribe((wolf) => {
       this.wolves.push(wolf);
       this.newWolf = { id: 0, name: '', gender: '', birthday: new Date() };
     });

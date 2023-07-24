@@ -20,6 +20,10 @@ export class PackService {
     return this.http.get<Pack[]>(`${environment.apiUrl}/packs`, this.httpOptions);
   }
 
+  getPack(id: number): Observable<Pack> {
+    return this.http.get<Pack>(`${environment.apiUrl}/packs/${id}`, this.httpOptions);
+  }
+
   addPack(pack: Pack): Observable<Pack> {
     return this.http.post<Pack>(`${environment.apiUrl}/packs`, pack, this.httpOptions);
   }
