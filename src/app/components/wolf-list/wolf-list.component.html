@@ -1,12 +1,19 @@
-<h2>All Wolves</h2>
-<div *ngFor="let wolf of wolves">
-  <input [(ngModel)]="wolf.name" (change)="updateWolf(wolf)" />
-  <input [(ngModel)]="wolf.gender" (change)="updateWolf(wolf)" />
-  <input type="date" [(ngModel)]="wolf.birthdate" (change)="updateWolf(wolf)" />
-  <button (click)="removeWolf(wolf.id)">Remove</button>
+<div class="container">
+  <div class="card border-primary mb-8" style="max-width: 100%">
+    <div class="card-header text-primary">
+      <h2 class="card-header-title">All Wolves</h2>
+      <div class="card-body">
+        <div *ngFor="let wolf of wolves">
+          <input [(ngModel)]="wolf.id" (change)="updateWolf(wolf)" />
+          <input [(ngModel)]="wolf.name" (change)="updateWolf(wolf)" />
+          <input [(ngModel)]="wolf.gender" (change)="updateWolf(wolf)" />
+        </div>
+      </div>
+      <h2>Add New Wolf</h2>
+      <input [(ngModel)]="newWolf.name" placeholder="Name" />
+      <input [(ngModel)]="newWolf.gender" placeholder="Gender" />
+      <input type="date"  [(ngModel)]="newWolf.birthday" />
+      <button type="submit" (click)="addWolf()">Add Wolf</button>
+    </div>
+  </div>
 </div>
-<h2>Add New Wolf</h2>
-<input [(ngModel)]="newWolf.name" placeholder="Name" />
-<input [(ngModel)]="newWolf.gender" placeholder="Gender" />
-<input type="date" [(ngModel)]="newWolf.birthdate" />
-<button (click)="addWolf()">Add Wolf</button>
