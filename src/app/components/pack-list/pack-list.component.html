@@ -16,44 +16,40 @@
       <p class="form-control">Longitude: {{ selectedPack.lng }}</p>
     </div>
     <div class="col-2">
-      <button (click)="removePack(selectedPackId)" class="btn btn-danger">Remove</button>
+      <button (click)="removePack(selectedPackId)" class="btn btn-danger">Remove Pack</button>
     </div>
 
 
     <h4>Wolves in the Pack:</h4>
-    <ul>
-      <li *ngFor="let wolf of selectedPack.wolves">
-        {{ wolf.name }} - {{ wolf.gender }} - {{ wolf.birthday | date: 'MM/dd/yyyy' }}
-        <button class="btn btn-danger" (click)="removeWolfFromPack(selectedPack.id, wolf.id)">Remove from Pack</button>
-      </li>
-    </ul>
+    <div class="col-2">
+      <ul>
+        <li *ngFor="let wolf of selectedPack.wolves">
+          {{ wolf.name }} - {{ wolf.gender }} - {{ wolf.birthday | date: 'MM/dd/yyyy' }}
+          <button class="btn btn-danger" (click)="removeWolfFromPack(selectedPack.id, wolf.id)">Remove from
+            Pack</button>
+        </li>
+      </ul>
+    </div>
 
     <h4>Add Wolf to Pack:</h4>
-    <div class="col-2">
-      <select class="form-select" [(ngModel)]="selectedWolfId">
-        <option value="">Select a Wolf</option>
-        <option *ngFor="let wolf of wolves" [value]="wolf.id">{{ wolf.name }}</option>
-      </select>
-      <button class="btn btn-primary" (click)="addWolfToPack(selectedPack.id, selectedWolfId)">Add to Pack</button>
-    </div>
+    <select class="form-select" [(ngModel)]="selectedWolfId">
+      <option *ngFor="let wolf of wolves" [value]="wolf.id">{{ wolf.name }}</option>
+    </select>
+    <button class="btn btn-primary" (click)="addWolfToPack(selectedPack.id, selectedWolfId)">Add to Pack</button>
   </div>
 
   <h2>Add New Pack</h2>
   <div class="col-2">
-    <div>
-      <label>Name:</label>
-      <input type="text" class="form-control" [(ngModel)]="newPack.name" placeholder="Name" />
-    </div>
-    <div>
-      <label>Latitude:</label>
-      <input type="text" class="form-control" [(ngModel)]="newPack.lat" placeholder="Latitude" type="number"
-        step="any" />
-    </div>
-    <div>
-      <label>Longitude:</label>
-      <input type="text" class="form-control" [(ngModel)]="newPack.lng" placeholder="Longitude" type="number"
-        step="any" />
-    </div>
+    <label>Name:</label>
+    <input type="text" class="form-control" [(ngModel)]="newPack.name" placeholder="Name" />
+  </div>
+  <div class="col-2">
+    <label>Latitude:</label>
+    <input type="text" class="form-control" [(ngModel)]="newPack.lat" placeholder="Latitude" type="number" step="any" />
+  </div>
+  <div class="col-2">
+    <label>Longitude:</label>
+    <input type="text" class="form-control" [(ngModel)]="newPack.lng" placeholder="Longitude" type="number"
+      step="any" />
     <button class="btn btn-primary" (click)="addPack()">Add Pack</button>
   </div>
-</div>

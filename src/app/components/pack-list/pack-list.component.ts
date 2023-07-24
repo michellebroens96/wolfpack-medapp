@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { merge } from 'rxjs';
 import { PackService } from 'src/app/services/pack.service';
 import { WolfService } from 'src/app/services/wolf.service';
 import { Pack } from 'src/models/pack.model';
@@ -17,7 +16,6 @@ export class PackListComponent implements OnInit {
   selectedPackId: number = 0;
   selectedPack: Pack | null = null;
   selectedWolfId: number = 0;
-  packWolves: Wolf[] = [];
 
   constructor(private packService: PackService, private wolfService: WolfService) { }
 
@@ -41,8 +39,6 @@ export class PackListComponent implements OnInit {
   getWolvesForPack(packId: number): void {
     this.packService.getPack(packId).subscribe((pack) => {
       this.selectedPack = pack;
-      this.packWolves = pack.wolves;
-      console.log(this.packWolves);
     });
   }
 
@@ -53,23 +49,39 @@ export class PackListComponent implements OnInit {
     });
   }
 
-  updatePack(pack: Pack): void {
-    this.packService.updatePack(pack).subscribe();
-  }
-
   removePack(id: number): void {
     this.packService.removePack(id).subscribe(() => {
       this.packs = this.packs.filter((pack) => pack.id !== id);
+      if (this.selectedPackId === id) {
+        if (this.packs.length > 0) {
+          this.selectedPackId = this.packs[0].id;
+        } else {
+          this.selectedPackId = 0;
+        }
+      }
     });
   }
 
   addWolfToPack(packId: number, wolfId: number): void {
-    this.packService.addWolfToPack(packId, wolfId).subscribe((pack) => {
+    this.packService.addWolfToPack(packId, wolfId).subscribe((data) => {
+      const newWolfIndex = this.wolves.findIndex((wolf) => wolf.id === wolfId);
+      if (newWolfIndex !== -1) {
+        const newWolf = this.wolves[newWolfIndex];
+        this.selectedPack?.wolves.push(newWolf);
+        this.wolves = this.wolves.filter((wolf) => wolf.id !== wolfId);
+      }
     });
   }
 
   removeWolfFromPack(packId: number, wolfId: number): void {
     this.packService.removeWolfFromPack(packId, wolfId).subscribe((data) => {
+      if (this.selectedPack) {
+        this.selectedPack.wolves = this.selectedPack.wolves.filter((wolf) => wolf.id !== wolfId);
+        const removedWolf = this.selectedPack.wolves.find((wolf) => wolf.id === wolfId);
+        if (removedWolf) {
+          this.wolves.push(removedWolf);
+        }
+      }
     });
   }
 }
