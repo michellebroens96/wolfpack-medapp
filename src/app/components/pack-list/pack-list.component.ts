@@ -64,9 +64,9 @@ export class PackListComponent implements OnInit {
 
   addWolfToPack(packId: number, wolfId: number): void {
     this.packService.addWolfToPack(packId, wolfId).subscribe((data) => {
-      const newWolfIndex = this.wolves.findIndex((wolf) => wolf.id === wolfId);
-      if (newWolfIndex !== -1) {
-        const newWolf = this.wolves[newWolfIndex];
+      const newWolf = this.wolves.find((wolf) => wolf.id == wolfId);
+      console.log(newWolf);
+      if (newWolf) {
         this.selectedPack?.wolves.push(newWolf);
         this.wolves = this.wolves.filter((wolf) => wolf.id !== wolfId);
       }
