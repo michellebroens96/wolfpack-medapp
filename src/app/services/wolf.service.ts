@@ -15,10 +15,14 @@ export class WolfService {
     })
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getWolves(): Observable<Wolf[]> {
     return this.http.get<Wolf[]>(`${environment.apiUrl}/wolves`, this.httpOptions);
+  }
+
+  getWolfById(wolfId: number): Observable<Wolf> {
+    return this.http.get<Wolf>(`${environment.apiUrl}/${wolfId}`, this.httpOptions);
   }
 
   addWolf(wolf: Wolf): Observable<Wolf> {

@@ -1,18 +1,26 @@
 <div class="container">
   <h2>Add New Wolf</h2>
-  <input [(ngModel)]="newWolf.name" placeholder="Name" />
-  <select [(ngModel)]="newWolf.gender">
-    <option value="male">Male</option>
-    <option value="female">Female</option>
-  </select>
-  <input type="date" [(ngModel)]="newWolf.birthday" />
-  <button (click)="addWolf()">Add Wolf</button>
-  <h2>All Wolves</h2>
-  <div *ngFor="let wolf of wolves">
-    <input [(ngModel)]="wolf.name" (change)="updateWolf(wolf)" />
-    <input [(ngModel)]="wolf.gender" (change)="updateWolf(wolf)" />
-    <input type="date" [(ngModel)]="wolf.birthday" (change)="updateWolf(wolf)" />
-    <button (click)="removeWolf(wolf.id)">Remove</button>
-    <button (click)="updateWolf(wolf)">Update</button>
+  <div class="row">
+    <div class="col-2">
+      <input type="text" class="form-control" [(ngModel)]="newWolf.name" placeholder="Name" />
+      <select type="select" class="form-select" [(ngModel)]="newWolf.gender">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+      <input class="form-control" type="date" [(ngModel)]="newWolf.birthday" />
+      <button type="button" class="btn btn-primary" (click)="addWolf()">Add Wolf</button>
+    </div>
   </div>
-</div>
+
+  <h2>All Wolves</h2>
+  <div class="row">
+    <div class="col-2">
+      <div *ngFor="let wolf of wolves" class="form-group">
+        <input [(ngModel)]="wolf.name" class="form-control" (change)="updateWolf(wolf)" />
+        <input [(ngModel)]="wolf.gender" class="form-control" (change)="updateWolf(wolf)" />
+        <input type="date" [(ngModel)]="wolf.birthday" class="form-control" (change)="updateWolf(wolf)" />
+        <button (click)="removeWolf(wolf.id)" class="btn btn-danger">Remove</button>
+        <button (click)="updateWolf(wolf)" class="btn btn-primary">Update</button>
+      </div>
+    </div>
+  </div>

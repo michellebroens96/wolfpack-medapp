@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { merge } from 'rxjs';
 import { PackService } from 'src/app/services/pack.service';
 import { WolfService } from 'src/app/services/wolf.service';
 import { Pack } from 'src/models/pack.model';
@@ -16,6 +17,7 @@ export class PackListComponent implements OnInit {
   selectedPackId: number = 0;
   selectedPack: Pack | null = null;
   selectedWolfId: number = 0;
+  packWolves: Wolf[] = [];
 
   constructor(private packService: PackService, private wolfService: WolfService) { }
 
@@ -36,19 +38,11 @@ export class PackListComponent implements OnInit {
     });
   }
 
-  onPackSelected(): void {
-    if (this.selectedPackId) {
-      this.packService.getPack(this.selectedPackId).subscribe((pack) => {
-        this.selectedPack = pack;
-      });
-    } else {
-      this.selectedPack = null;
-    }
-  }
-
   getWolvesForPack(packId: number): void {
     this.packService.getPack(packId).subscribe((pack) => {
       this.selectedPack = pack;
+      this.packWolves = pack.wolves;
+      console.log(this.packWolves);
     });
   }
 
@@ -71,19 +65,11 @@ export class PackListComponent implements OnInit {
 
   addWolfToPack(packId: number, wolfId: number): void {
     this.packService.addWolfToPack(packId, wolfId).subscribe((pack) => {
-      this.packs.find((p) => p.id === packId);
-      if (pack) {
-        const selectedWolf = this.wolves.find((w) => w.id === wolfId);
-        if (selectedWolf) {
-          pack.wolves.push(selectedWolf);
-        }
-      }
     });
   }
 
   removeWolfFromPack(packId: number, wolfId: number): void {
-    this.packService.removeWolfFromPack(packId, wolfId).subscribe((pack) => {
-      this.wolves = [...this.wolves];
+    this.packService.removeWolfFromPack(packId, wolfId).subscribe((data) => {
     });
   }
 }

@@ -1,45 +1,59 @@
 <div class="container">
   <h2>Pack List</h2>
-  <div>
-    <label>Select a Pack:</label>
-    <select [(ngModel)]="selectedPackId" (change)="onPackSelected()">
-      <option *ngFor="let pack of packs" [value]="pack.id">{{ pack.name }}</option>
-    </select>
+  <div class="row">
+    <div class="col-2">
+      <label>Select a Pack:</label>
+      <select class="form-select" [(ngModel)]="selectedPackId" (change)="getWolvesForPack(selectedPackId)">
+        <option *ngFor="let pack of packs" [value]="pack.id">{{ pack.name }}</option>
+      </select>
+    </div>
   </div>
 
   <div *ngIf="selectedPack">
-    <h3>{{ selectedPack.name }}</h3>
-    <p>Latitude: {{ selectedPack.lat }}</p>
-    <p>Longitude: {{ selectedPack.lng }}</p>
+    <div class="col-2">
+      <h3>{{ selectedPack.name }}</h3>
+      <p class="form-control">Latitude: {{ selectedPack.lat }}</p>
+      <p class="form-control">Longitude: {{ selectedPack.lng }}</p>
+    </div>
+    <div class="col-2">
+      <button (click)="removePack(selectedPackId)" class="btn btn-danger">Remove</button>
+    </div>
+
 
     <h4>Wolves in the Pack:</h4>
     <ul>
       <li *ngFor="let wolf of selectedPack.wolves">
         {{ wolf.name }} - {{ wolf.gender }} - {{ wolf.birthday | date: 'MM/dd/yyyy' }}
-        <button (click)="removeWolfFromPack(selectedPack.id, wolf.id)">Remove from Pack</button>
+        <button class="btn btn-danger" (click)="removeWolfFromPack(selectedPack.id, wolf.id)">Remove from Pack</button>
       </li>
     </ul>
 
     <h4>Add Wolf to Pack:</h4>
-    <select [(ngModel)]="selectedWolfId">
-      <option value="">Select a Wolf</option>
-      <option *ngFor="let wolf of wolves" [value]="wolf.id">{{ wolf.name }}</option>
-    </select>
-    <button (click)="addWolfToPack(selectedPack.id, selectedWolfId)">Add to Pack</button>
+    <div class="col-2">
+      <select class="form-select" [(ngModel)]="selectedWolfId">
+        <option value="">Select a Wolf</option>
+        <option *ngFor="let wolf of wolves" [value]="wolf.id">{{ wolf.name }}</option>
+      </select>
+      <button class="btn btn-primary" (click)="addWolfToPack(selectedPack.id, selectedWolfId)">Add to Pack</button>
+    </div>
   </div>
 
   <h2>Add New Pack</h2>
-  <div>
-    <label>Name:</label>
-    <input [(ngModel)]="newPack.name" placeholder="Name" />
+  <div class="col-2">
+    <div>
+      <label>Name:</label>
+      <input type="text" class="form-control" [(ngModel)]="newPack.name" placeholder="Name" />
+    </div>
+    <div>
+      <label>Latitude:</label>
+      <input type="text" class="form-control" [(ngModel)]="newPack.lat" placeholder="Latitude" type="number"
+        step="any" />
+    </div>
+    <div>
+      <label>Longitude:</label>
+      <input type="text" class="form-control" [(ngModel)]="newPack.lng" placeholder="Longitude" type="number"
+        step="any" />
+    </div>
+    <button class="btn btn-primary" (click)="addPack()">Add Pack</button>
   </div>
-  <div>
-    <label>Latitude:</label>
-    <input [(ngModel)]="newPack.lat" placeholder="Latitude" type="number" step="any" />
-  </div>
-  <div>
-    <label>Longitude:</label>
-    <input [(ngModel)]="newPack.lng" placeholder="Longitude" type="number" step="any" />
-  </div>
-  <button (click)="addPack()">Add Pack</button>
 </div>
